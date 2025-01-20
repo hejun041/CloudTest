@@ -7,6 +7,9 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start --reset-cache",
+    "release-android-bundle": "mkdir -p android/app/src/main/assets && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle",
+    "release-android": "cd android && sh gradlew assembleRelease && cd ../",
+    "release-ios-bundle": "shx mkdir -p ./ios/bundle && react-native bundle --entry-file ./index.js --bundle-output ./ios/bundle/main.jsbundle --platform ios --assets-dest ./ios/bundle --dev false",
     "test": "jest"
   },
   "dependencies": {

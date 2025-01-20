@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Dimensions, Image, ScaledSize, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AppState, AppStateStatus, Dimensions, Image, Platform, ScaledSize, StatusBar, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import DropdownAlert, {
   DropdownAlertColor,
   DropdownAlertData,
@@ -16,33 +16,65 @@ const Tab = createBottomTabNavigator();
 // 创建 alert 函数变量
 let alert = (_data: DropdownAlertData) => new Promise<DropdownAlertData>((res) => res);
 
-interface AppState {
+interface MAppState {
   isPortrait: boolean;
+  appState: AppStateStatus;
+  refresh: boolean;
 }
 
-class App extends PureComponent<{}, AppState> {
+class App extends PureComponent<{}, MAppState> {
   private dimensionSubscription: { remove: () => void } | undefined;
+  private appStateSubscription: { remove: () => void } | undefined;
 
   constructor(props: {}) {
     super(props);
     this.state = {
       isPortrait: this.isPortrait(),
+      appState: AppState.currentState,
+      refresh: false,
     };
   }
 
   componentDidMount() {
     this.dimensionSubscription = Dimensions.addEventListener('change', this.handleOrientationChange);
+    this.appStateSubscription = AppState.addEventListener('change', this.handleAppStateChange);
   }
 
   componentWillUnmount() {
     if (this.dimensionSubscription) {
       this.dimensionSubscription.remove();
     }
+    if (this.appStateSubscription) {
+      this.appStateSubscription.remove()
+    }
   }
+
+  showToast = (message: string) => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(message, ToastAndroid.SHORT);
+    } else {
+      //TODO:自定义iOS Toast
+      // this.showAlert(DropdownAlertType.Info, 'Info', message);
+    }
+  };
 
   isPortrait = (): boolean => {
     const { width, height } = Dimensions.get('window');
     return height >= width;
+  };
+
+  handleAppStateChange = (nextAppState: AppStateStatus) => {
+    const { appState } = this.state;
+
+    if (appState.match(/inactive|background/) && nextAppState === 'active') {
+      this.setState({ refresh: true })
+    } else if (nextAppState === 'background') {
+      this.showToast('APP 正在后台运行');
+      this.setState({ refresh: false })
+    }
+
+    // 更新应用状态
+    this.setState({ appState: nextAppState });
   };
 
   handleOrientationChange = ({ window }: { window: ScaledSize }) => {
@@ -100,8 +132,8 @@ class App extends PureComponent<{}, AppState> {
                 tabBarItemStyle: { flex: 1 },
                 animation: 'none',
               })}>
-              <Tab.Screen name="Chart">{() => <Chart isPortrait={isPortrait} />}</Tab.Screen>
-              <Tab.Screen name="Table">{() => <Table isPortrait={isPortrait} />}</Tab.Screen>
+              <Tab.Screen name="Chart">{() => <Chart isPortrait={isPortrait} refresh={this.state.refresh} />}</Tab.Screen>
+              <Tab.Screen name="Table">{() => <Table isPortrait={isPortrait} refresh={this.state.refresh} />}</Tab.Screen>
             </Tab.Navigator>
           </NavigationContainer>
           <DropdownAlert alert={(func) => (alert = func)} alertViewStyle={styles.alertStyle} />

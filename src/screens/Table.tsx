@@ -26,6 +26,7 @@ interface State {
 
 interface TableProps {
     isPortrait: boolean;
+    refresh: boolean;
 }
 
 export default class Table extends PureComponent<TableProps, State> {
@@ -47,8 +48,15 @@ export default class Table extends PureComponent<TableProps, State> {
 
     componentDidMount(): void {
         InteractionManager.runAfterInteractions(() => {
+            this.setState({ refreshing: true });
             this.getLocationAndFetchData();
         });
+    }
+
+    componentDidUpdate(prevProps: TableProps) {
+        if (this.props.refresh && !prevProps.refresh) {
+            this.fetchData();
+        }
     }
 
     // 获取位置并请求数据

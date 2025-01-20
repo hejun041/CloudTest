@@ -1,79 +1,104 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
-
+```markdown
 # Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## 基本要求
+- NodeJS 版本 >= 18
+- Java 版本 11
 
-## Step 1: Start the Metro Server
+## 下载体验
+- 下载最新版本的 APK 文件：[app-release.apk](https://github.com/hejun041/CloudTest/releases/latest/download/app-release.apk)
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## 步骤
 
-To start Metro, run the following command from the _root_ of your React Native project:
+1. **克隆代码**
+   ```bash
+   git clone <repository-url>
+   cd <repository-name>
+   ```
 
-```bash
-# using npm
-npm start
+2. **安装依赖**
+   ```bash
+   yarn
+   ```
 
-# OR using Yarn
-yarn start
+3. **对于安卓**
+   - 运行应用：
+     ```bash
+     yarn android
+     ```
+   - 运行 Metro Bundler：
+     ```bash
+     yarn start
+     ```
+   - 真机调试：
+     ```bash
+     adb reverse tcp:8081 tcp:8081
+     ```
+   - 打包：
+     ```bash
+     npm run release-android-bundle
+     npm run release-android
+     ```
+
+4. **对于iOS**
+   - 安装依赖：
+     ```bash
+     bundle install
+     cd ios
+     pod install
+     cd ..
+     ```
+   - 运行应用：
+     ```bash
+     yarn ios
+     ```
+   - 打包：
+     ```bash
+     npm run release-ios-bundle
+     打开Xcode product->archive，打包
+     ```
+
+# 故障排除
+可能遇到的问题：
+   ```
+  -bundle install
+   (node:11438) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+   (Use `node --trace-warnings ...` to show where the warning was created)
+                  Welcome to Metro v0.76.9
+               Fast - Scalable - Integrated
+
+   info Writing bundle output to:, android/app/src/main/assets/index.android.bundle
+   error ENOENT: no such file or directory, open 'android/app/src/main/assets/index.android.bundle'.
+   Error: ENOENT: no such file or directory, open 'android/app/src/main/assets/index.android.bundle'
+
+   先执行npm run release-android-bundle ,再执行bundle install
+   ```
+  -[!] Error installing boost
+    ```
+    Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 79e6d3f986444e5a80afbeccdaf2d1c1cf964baa8d766d20859d653a16c39848
+
+    [fix hear](https://github.com/facebook/react-native/pull/42118/files)
+    ```
+```plaintext
+MIT License
+
+Copyright (c) [2025] [JimHo]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 ```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.

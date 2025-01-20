@@ -21,6 +21,7 @@ interface State {
 
 interface ChartProps {
     isPortrait: boolean;
+    refresh: boolean;
 }
 
 export default class Chart extends PureComponent<ChartProps, State> {
@@ -40,6 +41,12 @@ export default class Chart extends PureComponent<ChartProps, State> {
         InteractionManager.runAfterInteractions(() => {
             this.getLocationAndFetchData(); // 获取位置并请求数据
         });
+    }
+
+    componentDidUpdate(prevProps: ChartProps) {
+        if (this.props.refresh && !prevProps.refresh) {
+            this.fetchData();
+        }
     }
 
     // 获取位置并请求数据
