@@ -1,4 +1,3 @@
-```markdown
 # Getting Started
 
 ## 基本要求
@@ -60,7 +59,7 @@
 
 # 故障排除
 可能遇到的问题：
-   ```
+
   -bundle install
    (node:11438) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
    (Use `node --trace-warnings ...` to show where the warning was created)
@@ -71,15 +70,15 @@
    error ENOENT: no such file or directory, open 'android/app/src/main/assets/index.android.bundle'.
    Error: ENOENT: no such file or directory, open 'android/app/src/main/assets/index.android.bundle'
 
-   先执行npm run release-android-bundle ,再执行bundle install
-   ```
+   **`npm run release-android-bundle`**，再执行 **`bundle install`**
+
   -[!] Error installing boost
-    ```
     Verification checksum was incorrect, expected f0397ba6e982c4450f27bf32a2a83292aba035b827a5623a14636ea583318c41, got 79e6d3f986444e5a80afbeccdaf2d1c1cf964baa8d766d20859d653a16c39848
 
-    [fix hear](https://github.com/facebook/react-native/pull/42118/files)
-    ```
-```plaintext
+   **[fix hear](https://github.com/facebook/react-native/pull/42118/files)**
+
+# License
+
 MIT License
 
 Copyright (c) [2025] [JimHo]
@@ -101,4 +100,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
